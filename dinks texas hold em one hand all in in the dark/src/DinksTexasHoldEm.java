@@ -12,10 +12,10 @@ public class DinksTexasHoldEm {
 		Deck game = new Deck();
 		game.populate();
 		game.shuffleDeck();
+		DLSLDASL
 		
 		// Create some players and give them cards
-		// WTF SKER E NA
-		OOH
+		
 		String numberOfPlayers = JOptionPane.showInputDialog("How many players?");
 		
 		for(int i = 0;i < Integer.parseInt(numberOfPlayers); i++) {
