@@ -16,7 +16,7 @@ public class DinksTexasHoldEm {
 
 		
 		// Create some players and give them cards
-		// fösöker ein gang till
+	
 
 
 		String numberOfPlayers = JOptionPane.showInputDialog("How many players?");
