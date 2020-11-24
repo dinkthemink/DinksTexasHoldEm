@@ -26,7 +26,6 @@ public class DinksTexasHoldEm {
 			deck.remove(0);
 			playerList.get(i).addCard(deck.get(0));
 			deck.remove(0);
-			System.out.println("Lillan ändring");
 			
 						
 			System.out.println("Player " + playerList.get(i)+"cards: " +playerList.get(i).getCards() + "\n");		
