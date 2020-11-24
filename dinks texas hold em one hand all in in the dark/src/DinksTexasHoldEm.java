@@ -12,7 +12,7 @@ public class DinksTexasHoldEm {
 		Deck game = new Deck();
 		game.populate();
 		game.shuffleDeck();
-		// HAHHAHA SKA FÖSÖK NA SKIT
+		// HAHHAHA SKA FÖSÖK NA SKIT men he gar int
 		
 		// Create some players and give them cards
 		
