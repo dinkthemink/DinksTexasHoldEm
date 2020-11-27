@@ -74,6 +74,19 @@ public class Players {
 		}
 		
 	}
+	public void sortByRankDes(Card[] k) {
+		Card tmp;
+		for(int i = 0; i < k.length; i++) {
+			for(int j = 0; j < k.length; j++) {
+				if(k[i].getRankNum() > k[j].getRankNum()) {					
+					tmp = k[i];
+					k[i] = k[j];
+					k[j] = tmp;
+				}
+			}
+		}
+		
+	}
 	
 	public void sortBySuit(Card[] k) {
 		Card tmp;

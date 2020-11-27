@@ -26,14 +26,26 @@ public class DinksTexasHoldEm {
 			String in = JOptionPane.showInputDialog("Name of player " + (i+1));
 			playerList.add(new Players(in));
 			
-			// Give the player 2 cards
-			playerList.get(i).addCard(deck.get(deck.size() -1));
-			deck.remove(deck.get(deck.size() -1));
-			playerList.get(i).addCard(deck.get(deck.size() -1));
-			deck.remove(deck.size() -1);
+//			// Give the player 2 cards
+//			playerList.get(i).addCard(deck.get(deck.size() -1));
+//			deck.remove(deck.get(deck.size() -1));
+//			playerList.get(i).addCard(deck.get(deck.size() -1));
+//			deck.remove(deck.size() -1);					
+//			System.out.println("Player " + playerList.get(i)+"cards: " +playerList.get(i).getCards() + "\n");	
+		}
+		
+		// Hand players 2 cards
+		for(int i =0; i < 2;i++) {
+			for(Players p: playerList) {
+				p.addCard(deck.get(deck.size() -1));
+				deck.remove(deck.size() -1);
+			}
+		}
+		
+		// Just printing player cards
+		for(Players p: playerList) {
+			System.out.println("Player " + p + " cards: " + p.getCards());
 			
-						
-			System.out.println("Player " + playerList.get(i)+"cards: " +playerList.get(i).getCards() + "\n");		
 		}
 		
 		// The flop
@@ -65,12 +77,6 @@ public class DinksTexasHoldEm {
 			playerList.get(i).addCardsToArray();
 		}
 		
-		// Sort the player cards for comparison
-		
-//		for(int i =0;i < playerList.size();i++) {
-//			playerList.get(i).sortByRank(playerList.get(i).getPlayerSortedCards());
-//			playerList.get(i).sortBySuit(playerList.get(i).getPlayerSortedCards());
-//		}
 
 		System.out.println();
 		System.out.println();
@@ -79,6 +85,7 @@ public class DinksTexasHoldEm {
 		for(int i =0;i < playerList.size();i++) {
 			
 //			playerList.get(i).printPlayerCards();
+//			playerList.get(i).sortByRank(playerList.get(i).getPlayerSortedCards());
 			playerList.get(i).testSortBySuit(playerList.get(i).getPlayerSortedCards());
 			playerList.get(i).printPlayerCards();
 			
@@ -87,8 +94,8 @@ public class DinksTexasHoldEm {
 //			checker.isFlush(playerList.get(i).sortByRank(playerList.get(i).getPlayerSortedCards()));
 			
 			
-			System.out.println("PLayer " + (i+1)  + " Hand Value: " + value.valueHand(playerList.get(i),playerList.get(i).getPlayerSortedCards()));
-			
+			System.out.println("PLayer " + (playerList.get(i).getName())  + " Hand Value: " + value.valueHand(playerList.get(i),playerList.get(i).getPlayerSortedCards()));
+		
 //			value.testFunk(playerList.get(i).getPlayerSortedCards());
 			
 			
