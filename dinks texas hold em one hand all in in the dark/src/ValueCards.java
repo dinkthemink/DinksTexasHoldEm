@@ -31,6 +31,7 @@ public class ValueCards {
 	public Card twoPairHigh;
 	
 	public int valueHand(Players p,Card[] c) {
+		
 		if(isRoyalFlush(c)) {
 			p.setValue(valueRoyalFlush(c));
 			return valueRoyalFlush(c);
@@ -135,7 +136,7 @@ public class ValueCards {
 		boolean isTwo = false;
 		boolean isThree = false;
 		int cardRepeat = 1;
-		Card ifThree = c[0];
+		Card ifThree = null;
 		Card ifTwo = null;
 		
 		for(int i = 0; i < c.length -1;i++) {
@@ -150,17 +151,22 @@ public class ValueCards {
 				cardRepeat = 1;
 			}
 		}
-		for(int i = 0; i < c.length -1;i++) {
-			if(c[i].getRank() == c[i+1].getRank() && c[i].getRankNum() != ifThree.getRankNum()) {
-				cardRepeat++;
-				if(cardRepeat == 2) {
-					ifTwo = c[i];
-					isTwo = true;
+		
+		if(isThree) {
+			for(int i = 0; i < c.length -1;i++) {
+				if(c[i].getRank() == c[i+1].getRank() && c[i].getRankNum() != ifThree.getRankNum()) {
+					cardRepeat++;
+					if(cardRepeat == 2) {
+						ifTwo = c[i];
+						isTwo = true;
+					}
+				}else {
+					cardRepeat = 1;
 				}
-			}else {
-				cardRepeat = 1;
 			}
+			
 		}
+		
 		if(isThree && isTwo) {
 			valueFullHouseHigh(ifThree);
 			System.out.println("FULL HOUSE WITH " + ifThree.getRank() + " and " + ifTwo.getRank()  );

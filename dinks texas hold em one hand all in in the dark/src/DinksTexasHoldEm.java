@@ -26,16 +26,11 @@ public class DinksTexasHoldEm {
 			String in = JOptionPane.showInputDialog("Name of player " + (i+1));
 			playerList.add(new Players(in));
 			
-//			// Give the player 2 cards
-//			playerList.get(i).addCard(deck.get(deck.size() -1));
-//			deck.remove(deck.get(deck.size() -1));
-//			playerList.get(i).addCard(deck.get(deck.size() -1));
-//			deck.remove(deck.size() -1);					
-//			System.out.println("Player " + playerList.get(i)+"cards: " +playerList.get(i).getCards() + "\n");	
 		}
 		
 		// Hand players 2 cards
 		for(int i =0; i < 2;i++) {
+			
 			for(Players p: playerList) {
 				p.addCard(deck.get(deck.size() -1));
 				deck.remove(deck.size() -1);
@@ -92,7 +87,6 @@ public class DinksTexasHoldEm {
 		}
 		for(int i=0;i < playerList.size();i++) {
 //			checker.isFlush(playerList.get(i).sortByRank(playerList.get(i).getPlayerSortedCards()));
-			
 			
 			System.out.println("PLayer " + (playerList.get(i).getName())  + " Hand Value: " + value.valueHand(playerList.get(i),playerList.get(i).getPlayerSortedCards()));
 		
