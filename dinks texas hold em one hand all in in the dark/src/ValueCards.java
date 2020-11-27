@@ -489,8 +489,7 @@ public class ValueCards {
 		onePairHigh = c;
 		return onePairHigh.getRankNum();
 	}
-	
-	
+		
 	// Sorting and Test Methods
 	
 	public void sortByRank(Card[] k) {
