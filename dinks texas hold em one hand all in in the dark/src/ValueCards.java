@@ -1,26 +1,25 @@
-import java.util.HashSet;
-import java.util.Set;
+
 
 public class ValueCards {
 	
 	public static final int ROYAL_STRAIGHT_FLUSH = 900;
 	
 	public static final int STRAIGHT_FLUSH = 800; 
-    // + valueHighCard()
+ 
 	public static final int FOUR_OF_A_KIND = 700; 
-    // + Quads Card Rank
+    
 	public static final int FULL_HOUSE     = 600; 
-    // + SET card rank
+   
 	public static final int FLUSH          = 500;  
-    // + valueHighCard()
+    
 	public static final int STRAIGHT       = 400;   
-    // + valueHighCard()
+    
 	public static final int THREE_OF_A_KIND= 300;    
-    // + Set card value
+  
 	public static final int TWO_PAIRS      = 200;     
-    // + High2*14^4+ Low2*14^2 + card
+   
 	public static final int ONE_PAIR       = 100;      
-    // + high*14^2 + high2*14^1 + low
+   
 	public Card flushHigh;
 	public Card quadHigh;
 	public Card rolayStraigthFlushHigh;
@@ -88,19 +87,19 @@ public class ValueCards {
 		return ONE_PAIR + onePairHigh.getRankNum() + valueHighCard(c);
 	}
 	public int valueFlush(Card[] c) {
-		return FLUSH + flushHigh.getRankNum() + valueHighCard(c);
+		return FLUSH + flushHigh.getRankNum();
 	}
 	public int valueFullHouse(Card[] c) {
-		return FULL_HOUSE + fullHouseHigh.getRankNum() + valueHighCard(c);
+		return FULL_HOUSE + fullHouseHigh.getRankNum();
 	}
 	public int valueStraightFlush(Card[] c) {
-		return STRAIGHT_FLUSH + straigthFlushHigh.getRankNum() + valueHighCard(c);
+		return STRAIGHT_FLUSH + straigthFlushHigh.getRankNum();
 	}
 	public int valueRoyalFlush(Card[] c) {
-		return ROYAL_STRAIGHT_FLUSH + rolayStraigthFlushHigh.getRankNum() + valueHighCard(c);
+		return ROYAL_STRAIGHT_FLUSH + rolayStraigthFlushHigh.getRankNum();
 	}
 	public int valueStraight(Card[] c) {
-		return STRAIGHT + straightHigh.getRankNum() + valueHighCard(c);
+		return STRAIGHT + straightHigh.getRankNum();
 	}
 	public int valueHighCard(Card[] c) {
 		int highCard;
