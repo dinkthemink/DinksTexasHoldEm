@@ -5,7 +5,7 @@ public class Players {
 	private ArrayList<Card> cards;
 	private String name;
 	private Card[] playerSortedCards;
-	private Card[] kickerCards;
+	private Card kickerCard;
 	private int value;
 	
 	public Players(String name) {
@@ -13,7 +13,7 @@ public class Players {
 		this.name = name;
 		cards = new ArrayList<Card>();
 		playerSortedCards = new Card[7];
-		kickerCards = new Card[2];
+		this.kickerCard = null;
 		System.out.println("Player " + name + " joined the game!");
 	}
 	public String getName() {
@@ -47,12 +47,13 @@ public class Players {
 	public Card[] getPlayerSortedCards() {
 		return playerSortedCards;
 	}
-	public Card[] getKickerCards() {
-		return kickerCards;
+	public void setKickerCard(Card c) {
+		kickerCard = c;
 	}
-	public void addKickerCardstoArray(int index,Card c) {
-		kickerCards[index] = c;
+	public Card getKickerCard() {
+		return kickerCard;
 	}
+	
 	
 	public void setCards(ArrayList<Card> cards) {
 		this.cards = cards;

@@ -29,6 +29,7 @@ public class ValueCards {
 	public Card threeHigh;	
 	public Card onePairHigh;
 	public Card twoPairHigh;
+	public Card twoPairLow;
 	
 	public int valueHand(Players p,Card[] c) {
 		
@@ -57,19 +58,19 @@ public class ValueCards {
 			return valueStraight(c);
 			
 		}else if(isThree(c)) {
-			p.setValue(valueThree(c));
-			return valueThree(c);
+			p.setValue(valueThree(c)  + p.getKickerCard().getRankNum());
+			return valueThree(c)  + p.getKickerCard().getRankNum();
 			
 		}else if(isTwoPair(c)) {
-			p.setValue(valueTwoPair(c));
-			return valueTwoPair(c);
+			p.setValue(valueTwoPair(c)  + p.getKickerCard().getRankNum());
+			return valueTwoPair(c)  + p.getKickerCard().getRankNum();
 			
 		}else if(isPair(c)) {
-			p.setValue(valuePair(c));
-			return valuePair(c);
+			p.setValue(valuePair(c)  + p.getKickerCard().getRankNum());
+			return valuePair(c)  + p.getKickerCard().getRankNum();
 		}else 
-			p.setValue(valueHighCard(c));
-			return valueHighCard(c);
+			p.setValue(valueHighCard(c)  + p.getKickerCard().getRankNum());
+			return valueHighCard(c)  + p.getKickerCard().getRankNum();
 		
 	}
 	
@@ -218,7 +219,7 @@ public class ValueCards {
 				if(numberOfPairs == 2 && cardRepeat == 2) {
 					p2 = c[i+1];
 					System.out.println("TWO PAIRS FOUND " + p1.getRank() + " and " + p2.getRank());
-					valueTwoPair(p2);
+					valueTwoPair(p1,p2);
 					isTwo = true;
 				}
 			}
@@ -239,6 +240,7 @@ public class ValueCards {
 	}
 	
 	public boolean isRoyalFlush(Card[] c) {
+		boolean isRoyalFlush = false;
 		sortBySuitAndRank(c);
 		if(c[6].getRank() == "Ace") {
 			if(c[2].getRank() == "Ten" && c[2].getSuit().equals(c[6].getSuit())
@@ -247,7 +249,7 @@ public class ValueCards {
 					&& c[5].getRank() == "King" && c[5].getSuit().equals(c[6].getSuit())) {
 				System.out.println("ROYAL STRAIGHT GOGOGOGOGOGOOGOG");
 				valueRolayStraigthFlushHighCard(c[6]);
-				return true;
+				isRoyalFlush = true;
 				
 			}else if(c[5].getRank() == "Ace") {
 				if(c[1].getRank() == "Ten" && c[1].getSuit().equals(c[5].getSuit())
@@ -256,7 +258,7 @@ public class ValueCards {
 						&& c[4].getRank() == "King" && c[4].getSuit().equals(c[5].getSuit())) {
 					System.out.println("ROYAL STRAIGHT GOGOGOGOGOGOOGOG");
 					valueRolayStraigthFlushHighCard(c[5]);
-					return true;
+					isRoyalFlush = true;
 				}
 			}else if(c[4].getRank() == "Ace") {
 				if(c[0].getRank() == "Ten" && c[0].getSuit().equals(c[4].getSuit())
@@ -265,13 +267,11 @@ public class ValueCards {
 						&& c[3].getRank() == "King" && c[3].getSuit().equals(c[4].getSuit())) {
 					System.out.println("ROYAL STRAIGHT GOGOGOGOGOGOOGOG");
 					valueRolayStraigthFlushHighCard(c[4]);
-					return true;
+					isRoyalFlush = true;
 				}
 			}
-		}else {
-			return false;
 		}
-		return false;	
+		return isRoyalFlush;	
 	}
 	
 	public boolean isStraight(Card[] c) {
@@ -284,12 +284,15 @@ public class ValueCards {
 		
 		if(c[6].getRankNum() == 14 && c[0].getRankNum() == 2) {
 			cardsInARowWithAce++;
-			for(int i =1;i < c.length -1;i++) {
+			for(int i =1;i < c.length -2;i++) {
+				if(c[i+1].getRankNum() - c[i].getRankNum() == 0) {
+					continue;
+				}
 				if(c[i+1].getRankNum() - c[i].getRankNum() == 1 && c[i+1].getRankNum() - c[i -1].getRankNum() == 2) {
 					cardsInARowWithAce++;
 					if(cardsInARowWithAce == 4) {
 						valueStraigthHighCard(c[i+1]);
-						System.out.println("STRAIGTH FOUND WITH ACE HIGH CARD " + c[i+1].getRank());
+						System.out.println("STRAIGTH FOUND WITH ACE CARD " + c[i+1].getRank());
 						isStraigth = true;
 						break;
 					}
@@ -299,6 +302,9 @@ public class ValueCards {
 		// Check if no Ace
 		
 		for(int i = 0;i < c.length -1; i++) {
+			if(c[i+1].getRankNum() - c[i].getRankNum() == 0) {
+				continue;
+			}
 			if(i == 0) {
 				if(c[i+1].getRankNum() - c[i].getRankNum() == 1) {
 					cardsInARow++;
@@ -326,11 +332,60 @@ public class ValueCards {
 	public boolean isStraightFlush(Card[] c) {
 		sortBySuitAndRank(c);
 		int cardsInARow = 0;
-
-
+		int cardsInARowWithAce = 0;
 		boolean isStraigthFlush = false;
 		
-		for(int i = 0;i < c.length -1; i++) {
+		// If Ace
+		
+		if (c[6].getRank() == "Ace" && c[2].getRank() == "Deuce" && c[6].getSuit() == c[2].getSuit()) {
+			cardsInARowWithAce++;
+			for(int i = 2;i < c.length -1; i++) {		
+				if(c[i+1].getRankNum() - c[i].getRankNum() == 1
+					&& c[i+1].getSuit() == c[i].getSuit()) {
+					cardsInARowWithAce++;
+					if(cardsInARowWithAce == 4) {
+						valueStraigthFlushHighCard(c[i+1]);
+						System.out.println("STRAIGTH FOUND WITH ACE " + c[6].getRank() + " to " + c[i+1].getRank());
+						isStraigthFlush = true;
+						break;
+					}
+				}	
+			}
+		}
+		if (c[5].getRank() == "Ace" && c[1].getRank() == "Deuce" && c[5].getSuit() == c[1].getSuit()) {
+			cardsInARowWithAce++;
+			for(int i = 1;i < c.length -1; i++) {		
+				if(c[i+1].getRankNum() - c[i].getRankNum() == 1
+					&& c[i+1].getSuit() == c[i].getSuit()) {
+					cardsInARowWithAce++;
+					if(cardsInARowWithAce == 4) {
+						valueStraigthFlushHighCard(c[i+1]);
+						System.out.println("STRAIGTH FOUND WITH ACE " + c[5].getRank() + " to " + c[i+1].getRank());
+						isStraigthFlush = true;
+						break;
+					}
+				}	
+			}
+		}
+		if (c[4].getRank() == "Ace" && c[0].getRank() == "Deuce" && c[4].getSuit() == c[0].getSuit()) {
+			cardsInARowWithAce++;
+			for(int i = 0;i < c.length -1; i++) {		
+				if(c[i+1].getRankNum() - c[i].getRankNum() == 1
+					&& c[i+1].getSuit() == c[i].getSuit()) {
+					cardsInARowWithAce++;
+					if(cardsInARowWithAce == 4) {
+						valueStraigthFlushHighCard(c[i+1]);
+						System.out.println("STRAIGTH FOUND WITH ACE " + c[4].getRank() + " to " + c[i+1].getRank());
+						isStraigthFlush = true;
+						break;
+					}
+				}	
+			}
+		}
+		
+		// If no Ace
+		
+		for(int i = 0;i < c.length -1; i++) {		
 			if(i == 0) {
 				if(c[i+1].getRankNum() - c[i].getRankNum() == 1
 					&& c[i+1].getSuit() == c[i].getSuit()) {
@@ -444,8 +499,7 @@ public class ValueCards {
 			return false;
 		}		
 	}
-	
-	
+		
 	// Set high card methods
 	
 	public int valueRolayStraigthFlushHighCard(Card c) {
@@ -481,9 +535,10 @@ public class ValueCards {
 		threeHigh = c;
 		return threeHigh.getRankNum();
 	}
-	public int valueTwoPair(Card c) {
+	public int valueTwoPair(Card c,Card d) {
 		twoPairHigh = c;
-		return twoPairHigh.getRankNum();
+		twoPairLow = d;
+		return (twoPairHigh.getRankNum()+ twoPairLow.getRankNum());
 	}
 	public int valueOnePair(Card c) {
 		onePairHigh = c;

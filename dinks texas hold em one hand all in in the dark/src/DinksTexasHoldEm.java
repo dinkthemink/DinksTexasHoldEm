@@ -28,10 +28,17 @@ public class DinksTexasHoldEm {
 			
 		}
 		
-		// Hand players 2 cards
+		// Hand players 2 cards and assign kickerCard
 		for(int i =0; i < 2;i++) {
 			
 			for(Players p: playerList) {
+				if(p.getKickerCard() == null) {
+					p.setKickerCard(deck.get(deck.size()- 1));
+				}else {
+					if(p.getKickerCard().getRankNum() < deck.get(deck.size()-1).getRankNum() ) {
+						p.setKickerCard(deck.get(deck.size() -1));
+					}
+				}
 				p.addCard(deck.get(deck.size() -1));
 				deck.remove(deck.size() -1);
 			}
@@ -40,6 +47,7 @@ public class DinksTexasHoldEm {
 		// Just printing player cards
 		for(Players p: playerList) {
 			System.out.println("Player " + p + " cards: " + p.getCards());
+			System.out.println("PLayer kickerCard : " + p.getKickerCard());
 			
 		}
 		
@@ -79,18 +87,19 @@ public class DinksTexasHoldEm {
 		// Print sorted Cards for each player
 		for(int i =0;i < playerList.size();i++) {
 			
-//			playerList.get(i).printPlayerCards();
-//			playerList.get(i).sortByRank(playerList.get(i).getPlayerSortedCards());
-			playerList.get(i).testSortBySuit(playerList.get(i).getPlayerSortedCards());
+
+			playerList.get(i).sortByRank(playerList.get(i).getPlayerSortedCards());
+
 			playerList.get(i).printPlayerCards();
 			
 		}
+		
+		// Value all hands and print them out
+		
 		for(int i=0;i < playerList.size();i++) {
-//			checker.isFlush(playerList.get(i).sortByRank(playerList.get(i).getPlayerSortedCards()));
 			
 			System.out.println("PLayer " + (playerList.get(i).getName())  + " Hand Value: " + value.valueHand(playerList.get(i),playerList.get(i).getPlayerSortedCards()));
 		
-//			value.testFunk(playerList.get(i).getPlayerSortedCards());
 			
 			
 			
