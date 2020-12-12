@@ -240,41 +240,38 @@ public class ValueCards {
 	}
 	
 	public boolean isRoyalFlush(Card[] c) {
+		Card highCard = null;
+		int cardsInARow = 0;
 		boolean isRoyalFlush = false;
 		sortBySuitAndRank(c);
-		if(c[6].getRank() == "Ace") {
-			if(c[2].getRank() == "Ten" && c[2].getSuit().equals(c[6].getSuit())
-					&& c[3].getRank() == "Jack" && c[3].getSuit().equals(c[6].getSuit())
-					&& c[4].getRank() == "Queen" && c[4].getSuit().equals(c[6].getSuit())
-					&& c[5].getRank() == "King" && c[5].getSuit().equals(c[6].getSuit())) {
-				System.out.println("ROYAL STRAIGHT GOGOGOGOGOGOOGOG");
-				valueRolayStraigthFlushHighCard(c[6]);
-				isRoyalFlush = true;
+		for(int i = 0;i < c.length -1; i++) {
+			
+			if(c[i+1].getRankNum() - c[i].getRankNum() == 1 && c[i+1].getSuit() == c[i].getSuit() ) {
+				cardsInARow++;
+				highCard = c[i+1];
+			}else {
+				if(i <= 2) {
+					cardsInARow = 0;
+					continue;			
+				}else {
+					break;
+				}
 				
-			}else if(c[5].getRank() == "Ace") {
-				if(c[1].getRank() == "Ten" && c[1].getSuit().equals(c[5].getSuit())
-						&& c[2].getRank() == "Jack" && c[2].getSuit().equals(c[5].getSuit())
-						&& c[3].getRank() == "Queen" && c[3].getSuit().equals(c[5].getSuit())
-						&& c[4].getRank() == "King" && c[4].getSuit().equals(c[5].getSuit())) {
-					System.out.println("ROYAL STRAIGHT GOGOGOGOGOGOOGOG");
-					valueRolayStraigthFlushHighCard(c[5]);
-					isRoyalFlush = true;
-				}
-			}else if(c[4].getRank() == "Ace") {
-				if(c[0].getRank() == "Ten" && c[0].getSuit().equals(c[4].getSuit())
-						&& c[1].getRank() == "Jack" && c[1].getSuit().equals(c[4].getSuit())
-						&& c[2].getRank() == "Queen" && c[2].getSuit().equals(c[4].getSuit())
-						&& c[3].getRank() == "King" && c[3].getSuit().equals(c[4].getSuit())) {
-					System.out.println("ROYAL STRAIGHT GOGOGOGOGOGOOGOG");
-					valueRolayStraigthFlushHighCard(c[4]);
-					isRoyalFlush = true;
-				}
 			}
+				
 		}
+		
+		if(cardsInARow >= 4 && highCard.getRankNum() == 14) {
+			isRoyalFlush = true;
+			System.out.println("RoyalFlush! HighCard: ");
+			valueRolayStraigthFlushHighCard(highCard);
+		}
+		
 		return isRoyalFlush;	
 	}
 	
 	public boolean isStraight(Card[] c) {
+		Card highCard = null;
 		sortByRank(c);
 		int cardsInARow = 0;
 		int cardsInARowWithAce = 0;
@@ -284,26 +281,22 @@ public class ValueCards {
 		
 		if(c[6].getRankNum() == 14 && c[0].getRankNum() == 2) {
 			cardsInARowWithAce++;
-			for(int i =1;i < c.length -2;i++) {
-				if(c[i+1].getRankNum() == c[i].getRankNum()) {
+			for(int i = 0;i < c.length -2;i++) {
+				if(c[i+1].getRankNum() - c[i].getRankNum() == 0) {
 					continue;
 				}
-				if(c[i+1].getRankNum() - c[i].getRankNum() == 1 
-						&& c[i+1].getRankNum() - c[i -1].getRankNum() == 2 
-						|| c[i+1].getRankNum() - c[i -1].getRankNum() == 1) {
+				if(c[i+1].getRankNum() - c[i].getRankNum() == 1) {
 					cardsInARowWithAce++;
-					if(cardsInARowWithAce == 4) {
-						
-						valueStraigthHighCard(c[i+1]);
-						System.out.println("STRAIGTH FOUND WITH ACE CARD " + c[i+1].getRank());
-						isStraigth = true;
-						break;
-					}
+					highCard = c[i+1];
+				}else {
+					break;
 				}
+			
 			}
+
 		}
 		// Check if no Ace
-		Card highCard = null;
+
 		for(int i = 0;i < c.length -1; i++) {
 			if(c[i+1].getRankNum() - c[i].getRankNum() == 0) {
 				continue;
@@ -312,237 +305,115 @@ public class ValueCards {
 				cardsInARow++;
 				highCard = c[i+1];
 			}else {
-				break;
-			}
-			
-			
-			
-//			
-//			if(i == 0) {
-//				if(c[i+1].getRankNum() - c[i].getRankNum() == 1) {
-//					cardsInARow++;
-//				}
-//			}
-//			if(i == 1) {
-//				if(c[i+1].getRankNum() - c[i].getRankNum() == 1 
-//						&& c[i+1].getRankNum() - c[i -1].getRankNum() == 2 
-//						|| c[i+1].getRankNum() - c[i -1].getRankNum() == 1) {
-//					cardsInARow++;
-//				}
-//			}
-//			if(i > 1) {
-//				
-//				if(c[i+1].getRankNum() == c[i].getRankNum()) {
-//					continue;
-//				}
-//				if(c[i+1].getRankNum() - c[i].getRankNum() == 1 
-//						&& c[i+1].getRankNum() - c[i -1].getRankNum() == 2
-//						|| c[i+1].getRankNum() - c[i -1].getRankNum() == 1) { // && c[i+1].getRankNum() - c[i -2].getRankNum() == 3) ?
-//					cardsInARow++;
-//					if(cardsInARow == 4) {
-//						if(i+2 <= 6) {
-//							i++;
-//							System.out.println("(SKODAR NÄSTA KORT JÄR ÄNNU)");
-//							if(c[i+1].getRankNum() - c[i].getRankNum() == 1 
-//									&& c[i+1].getRankNum() - c[i -1].getRankNum() == 2
-//									|| c[i+1].getRankNum() - c[i -1].getRankNum() == 1) { // && c[i+1].getRankNum() - c[i -2].getRankNum() == 3) ?
-//								valueStraigthHighCard(c[i+1]);							
-//								System.out.println("STRAIGTH FOUND HIGH CARD: " + c[i+1].getRank());
-//								isStraigth = true;
-//								break;
-//								
-//							}else {
-//								i--;
-//								valueStraigthHighCard(c[i+1]);
-//								System.out.println("STRAIGTH FOUND HIGH CARD: " + c[i+1].getRank());
-//								isStraigth = true;
-//								break;
-//							}
-//						}
-//						
-//					}
-//				}
-//				
-//			}		
+				if(i < 2) {
+					cardsInARow = 0;
+					continue;
+				}else {
+					break;
+				}			
+			}			
 		}
+		
 		if(cardsInARow >= 4) {
 			isStraigth = true;
-			System.out.println("moro");
-			System.out.println(highCard);
+			System.out.println("Straight found! Highcard: " + highCard);
+			valueStraigthHighCard(highCard);
+			
+		}
+		if(cardsInARowWithAce >= 4) {
+			
+			valueStraigthHighCard(highCard);
+			System.out.println("Straight found with Ace! HighCard: " + highCard);
+			
 		}
 		
 		return isStraigth;		
 	}
 	
 	public boolean isStraightFlush(Card[] c) {
+		Card highCard = null;
 		sortBySuitAndRank(c);
 		int cardsInARow = 0;
 		int cardsInARowWithAce = 0;
-		boolean isStraigthFlush = false;
+		boolean isStraigthFlush = false;	
 		
-		// If Ace
-		
-		if (c[6].getRank() == "Ace" && c[2].getRank() == "Deuce" && c[6].getSuit() == c[2].getSuit()) {
-			cardsInARowWithAce++;
-			for(int i = 2;i < c.length -1; i++) {		
-				if(c[i+1].getRankNum() - c[i].getRankNum() == 1
-					&& c[i+1].getSuit() == c[i].getSuit()) {
-					cardsInARowWithAce++;
-					if(cardsInARowWithAce == 4) {
-						valueStraigthFlushHighCard(c[i+1]);
-						System.out.println("STRAIGTH FOUND WITH ACE " + c[6].getRank() + " to " + c[i+1].getRank());
-						isStraigthFlush = true;
-						break;
-					}
-				}	
-			}
-		}
-		if (c[5].getRank() == "Ace" && c[1].getRank() == "Deuce" && c[5].getSuit() == c[1].getSuit()) {
-			cardsInARowWithAce++;
-			for(int i = 1;i < c.length -1; i++) {		
-				if(c[i+1].getRankNum() - c[i].getRankNum() == 1
-					&& c[i+1].getSuit() == c[i].getSuit()) {
-					cardsInARowWithAce++;
-					if(cardsInARowWithAce == 4) {
-						valueStraigthFlushHighCard(c[i+1]);
-						System.out.println("STRAIGTH FOUND WITH ACE " + c[5].getRank() + " to " + c[i+1].getRank());
-						isStraigthFlush = true;
-						break;
-					}
-				}	
-			}
-		}
-		if (c[4].getRank() == "Ace" && c[0].getRank() == "Deuce" && c[4].getSuit() == c[0].getSuit()) {
-			cardsInARowWithAce++;
-			for(int i = 0;i < c.length -1; i++) {		
-				if(c[i+1].getRankNum() - c[i].getRankNum() == 1
-					&& c[i+1].getSuit() == c[i].getSuit()) {
-					cardsInARowWithAce++;
-					if(cardsInARowWithAce == 4) {
-						valueStraigthFlushHighCard(c[i+1]);
-						System.out.println("STRAIGTH FOUND WITH ACE " + c[4].getRank() + " to " + c[i+1].getRank());
-						isStraigthFlush = true;
-						break;
-					}
-				}	
-			}
-		}
-		
-		// If no Ace
-		
-		for(int i = 0;i < c.length -1; i++) {		
-			if(i == 0) {
-				if(c[i+1].getRankNum() - c[i].getRankNum() == 1
-					&& c[i+1].getSuit() == c[i].getSuit()) {
-					cardsInARow++;
-				}
-			}
-			if(i > 0) {
+		// Check if no Ace
 
-				if(c[i+1].getRankNum() - c[i].getRankNum() == 1 
-						&& c[i+1].getSuit() == c[i].getSuit() 
-						&& c[i+1].getRankNum() - c[i -1].getRankNum() == 2 
-						&& c[i+1].getSuit() == c[i -1].getSuit()) {
-						cardsInARow++;
+		for(int i = 0;i < c.length -1; i++) {
+			
+			if(c[i+1].getRankNum() - c[i].getRankNum() == 1 && c[i+1].getSuit() == c[i].getSuit()) {
+				cardsInARow++;
+				highCard = c[i+1];
+			}else {
+				if(i < 2) {
+					cardsInARow = 0;
+					continue;
+				}else {
+					break;
+				}
+			}
+				
+		}
+		// Check for straight flush with aces
+		
+		for(int i = 0;i < c.length; i++) {
+			if(c[i].getRankNum() == 14) {
+				
+				for(int j = 0; j < c.length -1;j++) {
+					if(c[j].getRankNum() == 2 && c[j].getSuit() == c[i].getSuit()
+							&& c[j+1].getRankNum() == 3 && c[j+1].getSuit() == c[i].getSuit()
+							&& c[j+2].getRankNum() == 4 && c[j+2].getSuit() == c[i].getSuit()
+							&& c[j+3].getRankNum() == 5 && c[j+3].getSuit() == c[i].getSuit()) {
+						cardsInARowWithAce = 5;					
+						highCard = c[j+3];
 						
-					if(cardsInARow == 4) {
-						
-						valueStraigthFlushHighCard(c[i+1]);
-						System.out.println("STRAIGTH FOUND HIGH CARD " + c[i+1].getRank());
-						isStraigthFlush = true;
-						break;
 					}
 				}
+			}
 				
-			}		
 		}
 		
+		if(cardsInARow >= 4) {
+			isStraigthFlush = true;
+			System.out.println("StraightFlush! Highcard: " + highCard);
+			valueStraigthFlushHighCard(highCard);
+			
+		}else if(cardsInARowWithAce >= 4) {
+			isStraigthFlush = true;
+			System.out.println("Straithflush with Ace to Five! Highcard: " +highCard);
+			valueStraigthFlushHighCard(highCard);
+			
+		}
+			
 		return isStraigthFlush;		
 	}
 		
-	public boolean isFlush(Card[] c ) {				
-		
+	public boolean isFlush(Card[] c ) {
+		boolean isFlush = false;
+		Card highCard = null;
+		int cardsInARow = 0;
 		sortBySuitAndRank(c);
-		if(c[2].getSuit() == c[6].getSuit()) {
-			int maxVal;
-			int minVal;
-			int tmpMax = 2;
-			int tmpMin = 2;
-			maxVal = c[2].getRankNum();
-			minVal = c[2].getRankNum();
-			
-			for(int i =2;i < 7;i++) {
-				if(c[0].getSuit() == c[2].getSuit() && c[0].getRankNum() < minVal) {
-					minVal = c[0].getRankNum();
-					tmpMin = 0;
-				}else if(c[1].getSuit() == c[2].getSuit() && c[0].getRankNum() < minVal) {
-					minVal = c[1].getRankNum();
-					tmpMin = 1;
-				}
-				if(c[i].getRankNum() < minVal) {
-					minVal = c[i].getRankNum();
-					tmpMin = i;
+		for(int i = 0;i < c.length -1;i++) {
+			if(c[i+1].getSuit() == c[i].getSuit()) {
+				highCard = c[i+1];
+				cardsInARow++;
+			}else {
+				if(i < 2) {
+					cardsInARow = 0;
 					continue;
-				}
-				if(c[i].getRankNum() > maxVal) {
-					maxVal = c[i].getRankNum();
-					tmpMax = i;
+				}else {
+					break;
 				}
 			}
-			System.out.println("FLUSH FOUND! "+ c[tmpMin] + " to " + c[tmpMax] );
-			valueFlushHighCard(c[tmpMax]);
-			return true;
-		}else if(c[1].getSuit() == c[5].getSuit()) {
-			int maxVal;
-			int minVal;
-			int tmpMax = 1;
-			int tmpMin = 1;
-			maxVal = c[1].getRankNum();
-			minVal = c[1].getRankNum();
+		}
+		
+		if(cardsInARow >= 4) {
+			System.out.println("Flush found! HighCard: "+ highCard);
+			valueFlushHighCard(highCard);
+			isFlush = true;
 			
-			for(int i =1;i < 6;i++) {
-				if(c[0].getSuit() == c[1].getSuit() && c[0].getRankNum() < minVal) {
-					minVal = c[0].getRankNum();
-					tmpMin = 0;
-				}
-				if(c[i].getRankNum() < minVal) {
-					minVal = c[i].getRankNum();
-					tmpMin = i;
-					continue;
-				}
-				if(c[i].getRankNum() > maxVal) {
-					maxVal = c[i].getRankNum();
-					tmpMax = i;
-				}
-			}
-			System.out.println("FLUSH FOUND! "+ c[tmpMin] + " to " + c[tmpMax] );
-			valueFlushHighCard(c[tmpMax]);
-			return true;
-		}else if(c[0].getSuit() == c[4].getSuit()) {
-			int maxVal;
-			int minVal;
-			int tmpMax = 0;
-			int tmpMin = 0;
-			maxVal = c[0].getRankNum();
-			minVal = c[0].getRankNum();
-			
-			for(int i =0;i < 5;i++) {
-				if(c[i].getRankNum() < minVal) {
-					minVal = c[i].getRankNum();
-					tmpMin = i;
-					continue;
-				}
-				if(c[i].getRankNum() > maxVal) {
-					maxVal = c[i].getRankNum();
-					tmpMax = i;
-				}
-			}
-			System.out.println("FLUSH FOUND! "+ c[tmpMin] + " to " + c[tmpMax] );
-			valueFlushHighCard(c[tmpMax]);
-			return true;
-		}else {
-			return false;
-		}		
+		}
+		return isFlush;
 	}
 		
 	// Set high card methods

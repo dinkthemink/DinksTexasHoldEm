@@ -54,21 +54,65 @@ public class Players {
 		return kickerCard;
 	}
 	
-	public void addPlayerTestCards() {
+	public void isRoyalStraightFlushTest() {
 		
 		playerSortedCards[0] = new Card(Rank.DEUCE,Suit.DIAMONDS);
 		playerSortedCards[1] = new Card(Rank.THREE,Suit.CLUBS);
-		playerSortedCards[2] = new Card(Rank.FOUR,Suit.HEARTS);
-		playerSortedCards[3] = new Card(Rank.FIVE,Suit.CLUBS);
-		playerSortedCards[4] = new Card(Rank.SIX,Suit.DIAMONDS);
-		playerSortedCards[5] = new Card(Rank.SEVEN,Suit.CLUBS);
-		playerSortedCards[6] = new Card(Rank.SEVEN,Suit.HEARTS);
+		playerSortedCards[2] = new Card(Rank.ACE,Suit.HEARTS);
+		playerSortedCards[3] = new Card(Rank.KING,Suit.HEARTS);
+		playerSortedCards[4] = new Card(Rank.QUEEN,Suit.HEARTS);
+		playerSortedCards[5] = new Card(Rank.TEN,Suit.HEARTS);
+		playerSortedCards[6] = new Card(Rank.JACK,Suit.HEARTS);
 		
+	}
+	public void isStraightTest() {
+		
+		playerSortedCards[0] = new Card(Rank.ACE,Suit.DIAMONDS);
+		playerSortedCards[1] = new Card(Rank.THREE,Suit.CLUBS);
+		playerSortedCards[2] = new Card(Rank.FOUR,Suit.HEARTS);
+		playerSortedCards[3] = new Card(Rank.DEUCE,Suit.HEARTS);
+		playerSortedCards[4] = new Card(Rank.FIVE,Suit.HEARTS);
+		playerSortedCards[5] = new Card(Rank.QUEEN,Suit.HEARTS);
+		playerSortedCards[6] = new Card(Rank.TEN,Suit.HEARTS);
+	}
+	public void isStraightFlushTest() {
+		
+		playerSortedCards[0] = new Card(Rank.EIGHT,Suit.DIAMONDS);
+		playerSortedCards[1] = new Card(Rank.FIVE,Suit.DIAMONDS);
+		playerSortedCards[2] = new Card(Rank.FOUR,Suit.DIAMONDS);
+		playerSortedCards[3] = new Card(Rank.THREE,Suit.DIAMONDS);
+		playerSortedCards[4] = new Card(Rank.ACE,Suit.HEARTS);
+		playerSortedCards[5] = new Card(Rank.DEUCE,Suit.DIAMONDS);
+		playerSortedCards[6] = new Card(Rank.ACE,Suit.DIAMONDS);
+	}
+	public void isFlushTest() {
+		
+		playerSortedCards[0] = new Card(Rank.EIGHT,Suit.DIAMONDS);
+		playerSortedCards[1] = new Card(Rank.FIVE,Suit.DIAMONDS);
+		playerSortedCards[2] = new Card(Rank.FOUR,Suit.DIAMONDS);
+		playerSortedCards[3] = new Card(Rank.THREE,Suit.DIAMONDS);
+		playerSortedCards[4] = new Card(Rank.ACE,Suit.HEARTS);
+		playerSortedCards[5] = new Card(Rank.DEUCE,Suit.DIAMONDS);
+		playerSortedCards[6] = new Card(Rank.ACE,Suit.DIAMONDS);
 	}
 	
 	
 	public void setCards(ArrayList<Card> cards) {
 		this.cards = cards;
+	}
+	public void testValues(Players testPlayer,ValueCards value) {
+		
+		testPlayer.isRoyalStraightFlushTest();		
+		value.isStraightFlush(testPlayer.getPlayerSortedCards());
+		
+		testPlayer.isStraightFlushTest();	
+		value.isStraightFlush(testPlayer.getPlayerSortedCards());
+		
+		testPlayer.isStraightTest();
+		value.isStraight(testPlayer.getPlayerSortedCards());
+		
+		testPlayer.isFlushTest();
+		value.isFlush(testPlayer.getPlayerSortedCards());
 	}
 	
 	public String toString() {
@@ -142,5 +186,17 @@ public class Players {
 			System.out.println("Card " + (i+1) + ": " + playerSortedCards[i]);
 		}
 		System.out.println();
+	}
+	public void sortBySuitAndRank(Card[] k) {
+		Card tmp;
+		for(int i = 0; i < k.length; i++) {
+			for(int j = 0; j < k.length; j++) {
+				if(k[i].getSuitNum() + k[i].getRankNum() < k[j].getSuitNum() + k[j].getRankNum()) {					
+					tmp = k[i];
+					k[i] = k[j];
+					k[j] = tmp;
+				}
+			}
+		}	
 	}
 }
