@@ -54,6 +54,18 @@ public class Players {
 		return kickerCard;
 	}
 	
+	public void addPlayerTestCards() {
+		
+		playerSortedCards[0] = new Card(Rank.DEUCE,Suit.DIAMONDS);
+		playerSortedCards[1] = new Card(Rank.THREE,Suit.CLUBS);
+		playerSortedCards[2] = new Card(Rank.FOUR,Suit.HEARTS);
+		playerSortedCards[3] = new Card(Rank.FIVE,Suit.CLUBS);
+		playerSortedCards[4] = new Card(Rank.SIX,Suit.DIAMONDS);
+		playerSortedCards[5] = new Card(Rank.SEVEN,Suit.CLUBS);
+		playerSortedCards[6] = new Card(Rank.SEVEN,Suit.HEARTS);
+		
+	}
+	
 	
 	public void setCards(ArrayList<Card> cards) {
 		this.cards = cards;

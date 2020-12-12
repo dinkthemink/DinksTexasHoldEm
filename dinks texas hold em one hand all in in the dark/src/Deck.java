@@ -10,6 +10,9 @@ public class Deck extends DinksTexasHoldEm {
 	
 	Random rand = new Random();
 	
+	// Create Test deck
+	
+	
 	// Populate deck
 	public void populate() {
 		for(Suit suit: Suit.values()) {

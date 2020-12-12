@@ -133,7 +133,7 @@ public class ValueCards {
 	}
 	
 	public boolean isFullHouse(Card[] c) {
-		sortByRank(c);
+		sortByRankDes(c);
 		boolean isTwo = false;
 		boolean isThree = false;
 		int cardRepeat = 1;
@@ -176,7 +176,7 @@ public class ValueCards {
 		
 	}
 	public boolean isThree(Card[] c) {
-		sortByRank(c);
+		sortByRankDes(c);
 		boolean isThree = false;
 		int cardRepeat = 1;
 		for(int i=0;i < c.length -1;i++) {
@@ -195,7 +195,7 @@ public class ValueCards {
 		return isThree;
 	}
 	public boolean isTwoPair(Card[] c) {
-		sortByRank(c);
+		sortByRankDes(c);
 		boolean isTwo = false;
 		int cardRepeat = 1;
 		int numberOfPairs = 0;
@@ -285,12 +285,15 @@ public class ValueCards {
 		if(c[6].getRankNum() == 14 && c[0].getRankNum() == 2) {
 			cardsInARowWithAce++;
 			for(int i =1;i < c.length -2;i++) {
-				if(c[i+1].getRankNum() - c[i].getRankNum() == 0) {
+				if(c[i+1].getRankNum() == c[i].getRankNum()) {
 					continue;
 				}
-				if(c[i+1].getRankNum() - c[i].getRankNum() == 1 && c[i+1].getRankNum() - c[i -1].getRankNum() == 2) {
+				if(c[i+1].getRankNum() - c[i].getRankNum() == 1 
+						&& c[i+1].getRankNum() - c[i -1].getRankNum() == 2 
+						|| c[i+1].getRankNum() - c[i -1].getRankNum() == 1) {
 					cardsInARowWithAce++;
 					if(cardsInARowWithAce == 4) {
+						
 						valueStraigthHighCard(c[i+1]);
 						System.out.println("STRAIGTH FOUND WITH ACE CARD " + c[i+1].getRank());
 						isStraigth = true;
@@ -300,30 +303,72 @@ public class ValueCards {
 			}
 		}
 		// Check if no Ace
-		
+		Card highCard = null;
 		for(int i = 0;i < c.length -1; i++) {
 			if(c[i+1].getRankNum() - c[i].getRankNum() == 0) {
 				continue;
 			}
-			if(i == 0) {
-				if(c[i+1].getRankNum() - c[i].getRankNum() == 1) {
-					cardsInARow++;
-				}
+			if(c[i+1].getRankNum() - c[i].getRankNum() == 1) {
+				cardsInARow++;
+				highCard = c[i+1];
+			}else {
+				break;
 			}
-			if(i > 0) {
-
-				if(c[i+1].getRankNum() - c[i].getRankNum() == 1 && c[i+1].getRankNum() - c[i -1].getRankNum() == 2) {
-					cardsInARow++;
-					if(cardsInARow == 4) {
-						
-						valueStraigthHighCard(c[i+1]);
-						System.out.println("STRAIGTH FOUND HIGH CARD " + c[i+1].getRank());
-						isStraigth = true;
-						break;
-					}
-				}
-				
-			}		
+			
+			
+			
+//			
+//			if(i == 0) {
+//				if(c[i+1].getRankNum() - c[i].getRankNum() == 1) {
+//					cardsInARow++;
+//				}
+//			}
+//			if(i == 1) {
+//				if(c[i+1].getRankNum() - c[i].getRankNum() == 1 
+//						&& c[i+1].getRankNum() - c[i -1].getRankNum() == 2 
+//						|| c[i+1].getRankNum() - c[i -1].getRankNum() == 1) {
+//					cardsInARow++;
+//				}
+//			}
+//			if(i > 1) {
+//				
+//				if(c[i+1].getRankNum() == c[i].getRankNum()) {
+//					continue;
+//				}
+//				if(c[i+1].getRankNum() - c[i].getRankNum() == 1 
+//						&& c[i+1].getRankNum() - c[i -1].getRankNum() == 2
+//						|| c[i+1].getRankNum() - c[i -1].getRankNum() == 1) { // && c[i+1].getRankNum() - c[i -2].getRankNum() == 3) ?
+//					cardsInARow++;
+//					if(cardsInARow == 4) {
+//						if(i+2 <= 6) {
+//							i++;
+//							System.out.println("(SKODAR NÄSTA KORT JÄR ÄNNU)");
+//							if(c[i+1].getRankNum() - c[i].getRankNum() == 1 
+//									&& c[i+1].getRankNum() - c[i -1].getRankNum() == 2
+//									|| c[i+1].getRankNum() - c[i -1].getRankNum() == 1) { // && c[i+1].getRankNum() - c[i -2].getRankNum() == 3) ?
+//								valueStraigthHighCard(c[i+1]);							
+//								System.out.println("STRAIGTH FOUND HIGH CARD: " + c[i+1].getRank());
+//								isStraigth = true;
+//								break;
+//								
+//							}else {
+//								i--;
+//								valueStraigthHighCard(c[i+1]);
+//								System.out.println("STRAIGTH FOUND HIGH CARD: " + c[i+1].getRank());
+//								isStraigth = true;
+//								break;
+//							}
+//						}
+//						
+//					}
+//				}
+//				
+//			}		
+		}
+		if(cardsInARow >= 4) {
+			isStraigth = true;
+			System.out.println("moro");
+			System.out.println(highCard);
 		}
 		
 		return isStraigth;		
