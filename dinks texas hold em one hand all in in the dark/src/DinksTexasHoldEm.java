@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 public class DinksTexasHoldEm {
 	public static ArrayList<Card> deck = new ArrayList<Card>();
-	public static ArrayList<Players> playerList = new ArrayList<Players>();
+	public static ArrayList<Player> playerList = new ArrayList<Player>();
 	
 
 	public static void main(String[] args) {
@@ -29,14 +29,14 @@ public class DinksTexasHoldEm {
 			
 			// Add player(s)
 			String in = JOptionPane.showInputDialog("Name of player " + (i+1));
-			playerList.add(new Players(in));
+			playerList.add(new Player(in));
 			
 		}
 		
 		// Hand players 2 cards and assign kickerCard
 		for(int i =0; i < 2;i++) {
 			
-			for(Players p: playerList) {
+			for(Player p: playerList) {
 				if(p.getKickerCard() == null) {
 					p.setKickerCard(deck.get(deck.size()- 1));
 				}else {
@@ -50,7 +50,7 @@ public class DinksTexasHoldEm {
 		}
 		
 		// Just printing player cards
-		for(Players p: playerList) {
+		for(Player p: playerList) {
 			System.out.println("Player " + p + " cards: " + p.getCards());
 			System.out.println("PLayer kickerCard : " + p.getKickerCard());
 			
@@ -107,6 +107,22 @@ public class DinksTexasHoldEm {
 					
 			
 		}
+		// Check for winner and loser
+		Player winner = playerList.get(0);
+		Player loser = playerList.get(0);
+		for(int i=0;i < playerList.size() ;i++) {
+			if(winner.getValue() <= playerList.get(i).getValue()) {
+				winner = playerList.get(i);
+				
+			}
+			if(loser.getValue() >= playerList.get(i).getValue()) {
+				loser = playerList.get(i);
+			}
+		}
+		System.out.println("------------------------");
+		System.out.println("THE WINNER IS: " + winner);
+		System.out.println("AND THE LOSER IS: " + loser);
+		
 		// Only for testing
 //		Players testPlayer = new Players("Testplayer");
 		

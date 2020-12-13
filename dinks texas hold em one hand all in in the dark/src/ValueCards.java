@@ -2,23 +2,23 @@
 
 public class ValueCards {
 	
-	public static final int ROYAL_STRAIGHT_FLUSH = 900;
+	public static final int ROYAL_STRAIGHT_FLUSH = 9000;
 	
-	public static final int STRAIGHT_FLUSH = 800; 
+	public static final int STRAIGHT_FLUSH = 8000; 
  
-	public static final int FOUR_OF_A_KIND = 700; 
+	public static final int FOUR_OF_A_KIND = 7000; 
     
-	public static final int FULL_HOUSE     = 600; 
+	public static final int FULL_HOUSE     = 6000; 
    
-	public static final int FLUSH          = 500;  
+	public static final int FLUSH          = 5000;  
     
-	public static final int STRAIGHT       = 400;   
+	public static final int STRAIGHT       = 4000;   
     
-	public static final int THREE_OF_A_KIND= 300;    
+	public static final int THREE_OF_A_KIND= 3000;    
   
-	public static final int TWO_PAIRS      = 200;     
+	public static final int TWO_PAIRS      = 2000;     
    
-	public static final int ONE_PAIR       = 100;      
+	public static final int ONE_PAIR       = 1000;      
    
 	public Card flushHigh;
 	public Card quadHigh;
@@ -31,7 +31,7 @@ public class ValueCards {
 	public Card twoPairHigh;
 	public Card twoPairLow;
 	
-	public int valueHand(Players p,Card[] c) {
+	public int valueHand(Player p,Card[] c) {
 		
 		if(isRoyalFlush(c)) {
 			p.setValue(valueRoyalFlush(c));
@@ -58,19 +58,19 @@ public class ValueCards {
 			return valueStraight(c);
 			
 		}else if(isThree(c)) {
-			p.setValue(valueThree(c)  + p.getKickerCard().getRankNum());
-			return valueThree(c)  + p.getKickerCard().getRankNum();
+			p.setValue(valueThree(c)  + p.getKickerCard().getRankNum()*10);
+			return valueThree(c)  + p.getKickerCard().getRankNum() *10;
 			
 		}else if(isTwoPair(c)) {
-			p.setValue(valueTwoPair(c)  + p.getKickerCard().getRankNum());
-			return valueTwoPair(c)  + p.getKickerCard().getRankNum();
+			p.setValue(valueTwoPair(c)  + p.getKickerCard().getRankNum()*10);
+			return valueTwoPair(c)  + p.getKickerCard().getRankNum()*10;
 			
 		}else if(isPair(c)) {
-			p.setValue(valuePair(c)  + p.getKickerCard().getRankNum());
-			return valuePair(c)  + p.getKickerCard().getRankNum();
+			p.setValue(valuePair(c)  + p.getKickerCard().getRankNum()*10);
+			return valuePair(c)  + p.getKickerCard().getRankNum()*10;
 		}else 
-			p.setValue(valueHighCard(c)  + p.getKickerCard().getRankNum());
-			return valueHighCard(c)  + p.getKickerCard().getRankNum();
+			p.setValue(valueHighCard(c)  + p.getKickerCard().getRankNum()*10);
+			return valueHighCard(c)  + p.getKickerCard().getRankNum()*10;
 		
 	}
 	

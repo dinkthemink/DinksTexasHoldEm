@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class Players {
+public class Player {
 	
 	private ArrayList<Card> cards;
 	private String name;
@@ -8,7 +8,7 @@ public class Players {
 	private Card kickerCard;
 	private int value;
 	
-	public Players(String name) {
+	public Player(String name) {
 		this.value = 0;
 		this.name = name;
 		cards = new ArrayList<Card>();
@@ -53,6 +53,9 @@ public class Players {
 	public Card getKickerCard() {
 		return kickerCard;
 	}
+	public void setCards(ArrayList<Card> cards) {
+		this.cards = cards;
+	}
 	
 	public void isRoyalStraightFlushTest() {
 		
@@ -96,11 +99,7 @@ public class Players {
 		playerSortedCards[6] = new Card(Rank.ACE,Suit.DIAMONDS);
 	}
 	
-	
-	public void setCards(ArrayList<Card> cards) {
-		this.cards = cards;
-	}
-	public void testValues(Players testPlayer,ValueCards value) {
+	public void testValues(Player testPlayer,ValueCards value) {
 		
 		testPlayer.isRoyalStraightFlushTest();		
 		value.isStraightFlush(testPlayer.getPlayerSortedCards());
@@ -179,7 +178,9 @@ public class Players {
 				}
 			}
 		}	
-	}	
+	}
+	
+	
 	
 	public void printPlayerCards() {
 		for(int i=0;i < playerSortedCards.length;i++) {
